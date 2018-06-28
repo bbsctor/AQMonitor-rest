@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.stkj.AQMonitor.module.endpoint。dao.StationMnMapper" >
+  <resultMap id="BaseResultMap" type="com.stkj.AQMonitor.module.endpoint.entity.StationMn" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="site_name" property="siteName" jdbcType="VARCHAR" />
+    <result column="MN_alias" property="mnAlias" jdbcType="VARCHAR" />
+    <result column="MN" property="mn" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, site_name, MN_alias, MN
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from stationmn
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <!-- 选择所有MN别名 -->
+  <select id="selectALLMNName" resultType="java.lang.String" >
+    select DISTINCT MN_alias
+    from stationmn
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from stationmn
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.stkj.AQMonitor.module.endpoint.entity.StationMn" >
+    insert into stationmn (ID, site_name, MN_alias, 
+      MN)
+    values (#{id,jdbcType=INTEGER}, #{siteName,jdbcType=VARCHAR}, #{mnAlias,jdbcType=VARCHAR}, 
+      #{mn,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.stkj.AQMonitor.module.endpoint.entity.StationMn" >
+    insert into stationmn
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="siteName != null" >
+        site_name,
+      </if>
+      <if test="mnAlias != null" >
+        MN_alias,
+      </if>
+      <if test="mn != null" >
+        MN,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="siteName != null" >
+        #{siteName,jdbcType=VARCHAR},
+      </if>
+      <if test="mnAlias != null" >
+        #{mnAlias,jdbcType=VARCHAR},
+      </if>
+      <if test="mn != null" >
+        #{mn,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.stkj.AQMonitor.module.endpoint.entity.StationMn" >
+    update stationmn
+    <set >
+      <if test="siteName != null" >
+        site_name = #{siteName,jdbcType=VARCHAR},
+      </if>
+      <if test="mnAlias != null" >
+        MN_alias = #{mnAlias,jdbcType=VARCHAR},
+      </if>
+      <if test="mn != null" >
+        MN = #{mn,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.stkj.AQMonitor.module.endpoint.entity.StationMn" >
+    update stationmn
+    set site_name = #{siteName,jdbcType=VARCHAR},
+      MN_alias = #{mnAlias,jdbcType=VARCHAR},
+      MN = #{mn,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

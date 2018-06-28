@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.stkj.AQMonitor.module.endpoint.dao.StationInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.stkj.AQMonitor.module.endpoint.entity.StationInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="site_name" property="siteName" jdbcType="VARCHAR" />
+    <result column="site_num" property="siteNum" jdbcType="INTEGER" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+    <result column="deviceCounts" property="devicecounts" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, site_name, site_num, province, city, area, deviceCounts
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from stationinfo
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from stationinfo
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.stkj.AQMonitor.module.endpoint.entity.StationInfo" >
+    insert into stationinfo (id, site_name, site_num, 
+      province, city, area, 
+      deviceCounts)
+    values (#{id,jdbcType=INTEGER}, #{siteName,jdbcType=VARCHAR}, #{siteNum,jdbcType=INTEGER}, 
+      #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, 
+      #{devicecounts,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.stkj.AQMonitor.module.endpoint.entity.StationInfo" >
+    insert into stationinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="siteName != null" >
+        site_name,
+      </if>
+      <if test="siteNum != null" >
+        site_num,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="area != null" >
+        area,
+      </if>
+      <if test="devicecounts != null" >
+        deviceCounts,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="siteName != null" >
+        #{siteName,jdbcType=VARCHAR},
+      </if>
+      <if test="siteNum != null" >
+        #{siteNum,jdbcType=INTEGER},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="devicecounts != null" >
+        #{devicecounts,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.stkj.AQMonitor.module.endpoint.entity.StationInfo" >
+    update stationinfo
+    <set >
+      <if test="siteName != null" >
+        site_name = #{siteName,jdbcType=VARCHAR},
+      </if>
+      <if test="siteNum != null" >
+        site_num = #{siteNum,jdbcType=INTEGER},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="devicecounts != null" >
+        deviceCounts = #{devicecounts,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.stkj.AQMonitor.module.endpoint.entity.StationInfo" >
+    update stationinfo
+    set site_name = #{siteName,jdbcType=VARCHAR},
+      site_num = #{siteNum,jdbcType=INTEGER},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
+      deviceCounts = #{devicecounts,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

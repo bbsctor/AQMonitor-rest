@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.realtime.dao.RealDataDao">
+  <resultMap id="BaseResultMap" type="io.renren.modules.realtime.entity.RealData" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="time" property="time" jdbcType="TIMESTAMP" />
+    <result column="site_name" property="siteName" jdbcType="VARCHAR" />
+    <result column="site_num" property="siteNum" jdbcType="VARCHAR" />
+    <result column="MN" property="mn" jdbcType="VARCHAR" />
+    <result column="longtitude" property="longtitude" jdbcType="DOUBLE" />
+    <result column="latitude" property="latitude" jdbcType="DOUBLE" />
+    <result column="AQIindex" property="aqiindex" jdbcType="DOUBLE" />
+    <result column="AQIlevel" property="aqilevel" jdbcType="DOUBLE" />
+    <result column="SO2" property="so2" jdbcType="DOUBLE" />
+    <result column="SO2_flag" property="so2Flag" jdbcType="VARCHAR" />
+    <result column="atm_pressure" property="atmPressure" jdbcType="DOUBLE" />
+    <result column="atm_pressure_flag" property="atmPressureFlag" jdbcType="VARCHAR" />
+    <result column="wind_direction" property="windDirection" jdbcType="VARCHAR" />
+    <result column="wind_direction_flag" property="windDirectionFlag" jdbcType="VARCHAR" />
+    <result column="wind_speed" property="windSpeed" jdbcType="DOUBLE" />
+    <result column="wind_speed_flag" property="windSpeedFlag" jdbcType="VARCHAR" />
+    <result column="NO2" property="no2" jdbcType="DOUBLE" />
+    <result column="NO2_flag" property="no2Flag" jdbcType="VARCHAR" />
+    <result column="temperature" property="temperature" jdbcType="DOUBLE" />
+    <result column="temperature_flag" property="temperatureFlag" jdbcType="VARCHAR" />
+    <result column="TVOC" property="tvoc" jdbcType="DOUBLE" />
+    <result column="TVOC_flag" property="tvocFlag" jdbcType="VARCHAR" />
+    <result column="PM25" property="pm25" jdbcType="DOUBLE" />
+    <result column="PM25_flag" property="pm25Flag" jdbcType="VARCHAR" />
+    <result column="PM10" property="pm10" jdbcType="DOUBLE" />
+    <result column="PM10_flag" property="pm10Flag" jdbcType="VARCHAR" />
+    <result column="CO" property="co" jdbcType="DOUBLE" />
+    <result column="CO_flag" property="coFlag" jdbcType="VARCHAR" />
+    <result column="O3" property="o3" jdbcType="DOUBLE" />
+    <result column="O3_flag" property="o3Flag" jdbcType="VARCHAR" />
+    <result column="moisture" property="moisture" jdbcType="DOUBLE" />
+    <result column="moistrue_flag" property="moistrueFlag" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, time, site_name, site_num, MN, longtitude, latitude, AQIindex, AQIlevel, SO2, 
+    SO2_flag, atm_pressure, atm_pressure_flag, wind_direction, wind_direction_flag, wind_speed, 
+    wind_speed_flag, NO2, NO2_flag, temperature, temperature_flag, TVOC, TVOC_flag, PM25, 
+    PM25_flag, PM10, PM10_flag, CO, CO_flag, O3, O3_flag, moisture, moistrue_flag
+  </sql>
+  
+ <!-- 查询所有实时数据 -->
+    <select id="getRealData"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from realdata
+    order by time desc
+  </select>
+   
+   <select id="selectAllData"  resultType="java.util.HashMap">
+    select 
+    <include refid="Base_Column_List" />
+    from realdata
+    order by time desc
+  </select>
+  <!-- 查询一段时间内的历史数据 -->
+   <select id="selectByTime" resultMap="BaseResultMap"   parameterType="java.util.HashMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from realdata
+     <where>  
+     <if test="startTime != null and startTime != ''">AND time <![CDATA[>=]]> #{startTime}</if>
+     <if test="endTime != null and endTime != ''">AND time <![CDATA[<=]]>#{endTime}</if>
+    </where>
+   order by time desc
+  </select>
+
+<!-- 根据MN查询数据 -->
+  <select id="selectInfoByMN" parameterType="java.lang.String" resultMap="BaseResultMap">  
+    SELECT  <include refid="Base_Column_List" /> 
+    FROM realdata  
+    WHERE  mn = #{mn,jdbcType=VARCHAR}
+   order by time desc
+</select> 
+<select id="selectNo2"  resultType="java.lang.Double">  
+    SELECT NO2
+    FROM realdata     
+</select> 
+
+ <!-- 查询某一个站点一段时间内的历史数据 -->
+   <select id="queryByTimeAndMN" resultMap="BaseResultMap"   parameterType="java.util.HashMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from realdata
+     where 1=1
+     <if test="mn!=null"> and MN=#{mn,jdbcType=VARCHAR} </if>
+     <if test="startTime != null and startTime != ''">AND time <![CDATA[>=]]> #{startTime}</if>
+     <if test="endTime != null and endTime != ''">AND time <![CDATA[<=]]>#{endTime}</if>
+   order by time desc
+  </select>
+  
+  
+ <select id="selectAllMN"  resultType="java.lang.String">  
+    SELECT DISTINCT mn
+    FROM realdata  
+</select>
+
+<select id="queryByTime" resultMap="BaseResultMap">
+ select  
+ <include refid="Base_Column_List" />   
+ from realdata
+ where 
+ time between starttime and endtime  
+ order by time desc
+</select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from realdata
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from realdata
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="io.renren.modules.realtime.entity.RealData" >
+    insert into realdata (ID, time, site_name, 
+      site_num, MN, longtitude, 
+      latitude, AQIindex, AQIlevel, 
+      SO2, SO2_flag, atm_pressure, 
+      atm_pressure_flag, wind_direction, wind_direction_flag, 
+      wind_speed, wind_speed_flag, NO2, 
+      NO2_flag, temperature, temperature_flag, 
+      TVOC, TVOC_flag, PM25, 
+      PM25_flag, PM10, PM10_flag, 
+      CO, CO_flag, O3, O3_flag, 
+      moisture, moistrue_flag)
+    values (#{id,jdbcType=INTEGER}, #{time,jdbcType=TIMESTAMP}, #{siteName,jdbcType=VARCHAR}, 
+      #{siteNum,jdbcType=VARCHAR}, #{mn,jdbcType=VARCHAR}, #{longtitude,jdbcType=DOUBLE}, 
+      #{latitude,jdbcType=DOUBLE}, #{aqiindex,jdbcType=DOUBLE}, #{aqilevel,jdbcType=DOUBLE}, 
+      #{so2,jdbcType=DOUBLE}, #{so2Flag,jdbcType=VARCHAR}, #{atmPressure,jdbcType=DOUBLE}, 
+      #{atmPressureFlag,jdbcType=VARCHAR}, #{windDirection,jdbcType=VARCHAR}, #{windDirectionFlag,jdbcType=VARCHAR}, 
+      #{windSpeed,jdbcType=DOUBLE}, #{windSpeedFlag,jdbcType=VARCHAR}, #{no2,jdbcType=DOUBLE}, 
+      #{no2Flag,jdbcType=VARCHAR}, #{temperature,jdbcType=DOUBLE}, #{temperatureFlag,jdbcType=VARCHAR}, 
+      #{tvoc,jdbcType=DOUBLE}, #{tvocFlag,jdbcType=VARCHAR}, #{pm25,jdbcType=DOUBLE}, 
+      #{pm25Flag,jdbcType=VARCHAR}, #{pm10,jdbcType=DOUBLE}, #{pm10Flag,jdbcType=VARCHAR}, 
+      #{co,jdbcType=DOUBLE}, #{coFlag,jdbcType=VARCHAR}, #{o3,jdbcType=DOUBLE}, #{o3Flag,jdbcType=VARCHAR}, 
+      #{moisture,jdbcType=DOUBLE}, #{moistrueFlag,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="io.renren.modules.realtime.entity.RealData" >
+    insert into realdata
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="siteName != null" >
+        site_name,
+      </if>
+      <if test="siteNum != null" >
+        site_num,
+      </if>
+      <if test="mn != null" >
+        MN,
+      </if>
+      <if test="longtitude != null" >
+        longtitude,
+      </if>
+      <if test="latitude != null" >
+        latitude,
+      </if>
+      <if test="aqiindex != null" >
+        AQIindex,
+      </if>
+      <if test="aqilevel != null" >
+        AQIlevel,
+      </if>
+      <if test="so2 != null" >
+        SO2,
+      </if>
+      <if test="so2Flag != null" >
+        SO2_flag,
+      </if>
+      <if test="atmPressure != null" >
+        atm_pressure,
+      </if>
+      <if test="atmPressureFlag != null" >
+        atm_pressure_flag,
+      </if>
+      <if test="windDirection != null" >
+        wind_direction,
+      </if>
+      <if test="windDirectionFlag != null" >
+        wind_direction_flag,
+      </if>
+      <if test="windSpeed != null" >
+        wind_speed,
+      </if>
+      <if test="windSpeedFlag != null" >
+        wind_speed_flag,
+      </if>
+      <if test="no2 != null" >
+        NO2,
+      </if>
+      <if test="no2Flag != null" >
+        NO2_flag,
+      </if>
+      <if test="temperature != null" >
+        temperature,
+      </if>
+      <if test="temperatureFlag != null" >
+        temperature_flag,
+      </if>
+      <if test="tvoc != null" >
+        TVOC,
+      </if>
+      <if test="tvocFlag != null" >
+        TVOC_flag,
+      </if>
+      <if test="pm25 != null" >
+        PM25,
+      </if>
+      <if test="pm25Flag != null" >
+        PM25_flag,
+      </if>
+      <if test="pm10 != null" >
+        PM10,
+      </if>
+      <if test="pm10Flag != null" >
+        PM10_flag,
+      </if>
+      <if test="co != null" >
+        CO,
+      </if>
+      <if test="coFlag != null" >
+        CO_flag,
+      </if>
+      <if test="o3 != null" >
+        O3,
+      </if>
+      <if test="o3Flag != null" >
+        O3_flag,
+      </if>
+      <if test="moisture != null" >
+        moisture,
+      </if>
+      <if test="moistrueFlag != null" >
+        moistrue_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="siteName != null" >
+        #{siteName,jdbcType=VARCHAR},
+      </if>
+      <if test="siteNum != null" >
+        #{siteNum,jdbcType=VARCHAR},
+      </if>
+      <if test="mn != null" >
+        #{mn,jdbcType=VARCHAR},
+      </if>
+      <if test="longtitude != null" >
+        #{longtitude,jdbcType=DOUBLE},
+      </if>
+      <if test="latitude != null" >
+        #{latitude,jdbcType=DOUBLE},
+      </if>
+      <if test="aqiindex != null" >
+        #{aqiindex,jdbcType=DOUBLE},
+      </if>
+      <if test="aqilevel != null" >
+        #{aqilevel,jdbcType=DOUBLE},
+      </if>
+      <if test="so2 != null" >
+        #{so2,jdbcType=DOUBLE},
+      </if>
+      <if test="so2Flag != null" >
+        #{so2Flag,jdbcType=VARCHAR},
+      </if>
+      <if test="atmPressure != null" >
+        #{atmPressure,jdbcType=DOUBLE},
+      </if>
+      <if test="atmPressureFlag != null" >
+        #{atmPressureFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="windDirection != null" >
+        #{windDirection,jdbcType=VARCHAR},
+      </if>
+      <if test="windDirectionFlag != null" >
+        #{windDirectionFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="windSpeed != null" >
+        #{windSpeed,jdbcType=DOUBLE},
+      </if>
+      <if test="windSpeedFlag != null" >
+        #{windSpeedFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="no2 != null" >
+        #{no2,jdbcType=DOUBLE},
+      </if>
+      <if test="no2Flag != null" >
+        #{no2Flag,jdbcType=VARCHAR},
+      </if>
+      <if test="temperature != null" >
+        #{temperature,jdbcType=DOUBLE},
+      </if>
+      <if test="temperatureFlag != null" >
+        #{temperatureFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="tvoc != null" >
+        #{tvoc,jdbcType=DOUBLE},
+      </if>
+      <if test="tvocFlag != null" >
+        #{tvocFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="pm25 != null" >
+        #{pm25,jdbcType=DOUBLE},
+      </if>
+      <if test="pm25Flag != null" >
+        #{pm25Flag,jdbcType=VARCHAR},
+      </if>
+      <if test="pm10 != null" >
+        #{pm10,jdbcType=DOUBLE},
+      </if>
+      <if test="pm10Flag != null" >
+        #{pm10Flag,jdbcType=VARCHAR},
+      </if>
+      <if test="co != null" >
+        #{co,jdbcType=DOUBLE},
+      </if>
+      <if test="coFlag != null" >
+        #{coFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="o3 != null" >
+        #{o3,jdbcType=DOUBLE},
+      </if>
+      <if test="o3Flag != null" >
+        #{o3Flag,jdbcType=VARCHAR},
+      </if>
+      <if test="moisture != null" >
+        #{moisture,jdbcType=DOUBLE},
+      </if>
+      <if test="moistrueFlag != null" >
+        #{moistrueFlag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="io.renren.modules.realtime.entity.RealData" >
+    update realdata
+    <set >
+      <if test="time != null" >
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="siteName != null" >
+        site_name = #{siteName,jdbcType=VARCHAR},
+      </if>
+      <if test="siteNum != null" >
+        site_num = #{siteNum,jdbcType=VARCHAR},
+      </if>
+      <if test="mn != null" >
+        MN = #{mn,jdbcType=VARCHAR},
+      </if>
+      <if test="longtitude != null" >
+        longtitude = #{longtitude,jdbcType=DOUBLE},
+      </if>
+      <if test="latitude != null" >
+        latitude = #{latitude,jdbcType=DOUBLE},
+      </if>
+      <if test="aqiindex != null" >
+        AQIindex = #{aqiindex,jdbcType=DOUBLE},
+      </if>
+      <if test="aqilevel != null" >
+        AQIlevel = #{aqilevel,jdbcType=DOUBLE},
+      </if>
+      <if test="so2 != null" >
+        SO2 = #{so2,jdbcType=DOUBLE},
+      </if>
+      <if test="so2Flag != null" >
+        SO2_flag = #{so2Flag,jdbcType=VARCHAR},
+      </if>
+      <if test="atmPressure != null" >
+        atm_pressure = #{atmPressure,jdbcType=DOUBLE},
+      </if>
+      <if test="atmPressureFlag != null" >
+        atm_pressure_flag = #{atmPressureFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="windDirection != null" >
+        wind_direction = #{windDirection,jdbcType=VARCHAR},
+      </if>
+      <if test="windDirectionFlag != null" >
+        wind_direction_flag = #{windDirectionFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="windSpeed != null" >
+        wind_speed = #{windSpeed,jdbcType=DOUBLE},
+      </if>
+      <if test="windSpeedFlag != null" >
+        wind_speed_flag = #{windSpeedFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="no2 != null" >
+        NO2 = #{no2,jdbcType=DOUBLE},
+      </if>
+      <if test="no2Flag != null" >
+        NO2_flag = #{no2Flag,jdbcType=VARCHAR},
+      </if>
+      <if test="temperature != null" >
+        temperature = #{temperature,jdbcType=DOUBLE},
+      </if>
+      <if test="temperatureFlag != null" >
+        temperature_flag = #{temperatureFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="tvoc != null" >
+        TVOC = #{tvoc,jdbcType=DOUBLE},
+      </if>
+      <if test="tvocFlag != null" >
+        TVOC_flag = #{tvocFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="pm25 != null" >
+        PM25 = #{pm25,jdbcType=DOUBLE},
+      </if>
+      <if test="pm25Flag != null" >
+        PM25_flag = #{pm25Flag,jdbcType=VARCHAR},
+      </if>
+      <if test="pm10 != null" >
+        PM10 = #{pm10,jdbcType=DOUBLE},
+      </if>
+      <if test="pm10Flag != null" >
+        PM10_flag = #{pm10Flag,jdbcType=VARCHAR},
+      </if>
+      <if test="co != null" >
+        CO = #{co,jdbcType=DOUBLE},
+      </if>
+      <if test="coFlag != null" >
+        CO_flag = #{coFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="o3 != null" >
+        O3 = #{o3,jdbcType=DOUBLE},
+      </if>
+      <if test="o3Flag != null" >
+        O3_flag = #{o3Flag,jdbcType=VARCHAR},
+      </if>
+      <if test="moisture != null" >
+        moisture = #{moisture,jdbcType=DOUBLE},
+      </if>
+      <if test="moistrueFlag != null" >
+        moistrue_flag = #{moistrueFlag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="io.renren.modules.realtime.entity.RealData" >
+    update realdata
+    set time = #{time,jdbcType=TIMESTAMP},
+      site_name = #{siteName,jdbcType=VARCHAR},
+      site_num = #{siteNum,jdbcType=VARCHAR},
+      MN = #{mn,jdbcType=VARCHAR},
+      longtitude = #{longtitude,jdbcType=DOUBLE},
+      latitude = #{latitude,jdbcType=DOUBLE},
+      AQIindex = #{aqiindex,jdbcType=DOUBLE},
+      AQIlevel = #{aqilevel,jdbcType=DOUBLE},
+      SO2 = #{so2,jdbcType=DOUBLE},
+      SO2_flag = #{so2Flag,jdbcType=VARCHAR},
+      atm_pressure = #{atmPressure,jdbcType=DOUBLE},
+      atm_pressure_flag = #{atmPressureFlag,jdbcType=VARCHAR},
+      wind_direction = #{windDirection,jdbcType=VARCHAR},
+      wind_direction_flag = #{windDirectionFlag,jdbcType=VARCHAR},
+      wind_speed = #{windSpeed,jdbcType=DOUBLE},
+      wind_speed_flag = #{windSpeedFlag,jdbcType=VARCHAR},
+      NO2 = #{no2,jdbcType=DOUBLE},
+      NO2_flag = #{no2Flag,jdbcType=VARCHAR},
+      temperature = #{temperature,jdbcType=DOUBLE},
+      temperature_flag = #{temperatureFlag,jdbcType=VARCHAR},
+      TVOC = #{tvoc,jdbcType=DOUBLE},
+      TVOC_flag = #{tvocFlag,jdbcType=VARCHAR},
+      PM25 = #{pm25,jdbcType=DOUBLE},
+      PM25_flag = #{pm25Flag,jdbcType=VARCHAR},
+      PM10 = #{pm10,jdbcType=DOUBLE},
+      PM10_flag = #{pm10Flag,jdbcType=VARCHAR},
+      CO = #{co,jdbcType=DOUBLE},
+      CO_flag = #{coFlag,jdbcType=VARCHAR},
+      O3 = #{o3,jdbcType=DOUBLE},
+      O3_flag = #{o3Flag,jdbcType=VARCHAR},
+      moisture = #{moisture,jdbcType=DOUBLE},
+      moistrue_flag = #{moistrueFlag,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
