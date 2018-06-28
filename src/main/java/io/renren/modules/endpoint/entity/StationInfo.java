@@ -1,4 +1,4 @@
-package com.stkj.AQMonitor.module.endpoint.entity;
+package io.renren.modules.endpoint.entity;
 
 public class StationInfo {
     private Integer id;

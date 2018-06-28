@@ -17,8 +17,6 @@ import io.renren.common.utils.PageUtils;
 import io.renren.common.utils.R;
 import io.renren.modules.history.entity.HistoryData;
 import io.renren.modules.history.service.HistoryDataService;
-import io.renren.modules.realtime.entity.RealData;
-import io.renren.modules.realtime.service.RTDataService;
 import io.renren.modules.sys.controller.AbstractController;
 
 @RestController

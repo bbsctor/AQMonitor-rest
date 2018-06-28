@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>绠＄悊鍛樺垪琛�</title>
+<#include "/header.html">
+</head>
+<body>
+<div id="rrapp" v-cloak>
+	<div v-show="showList">
+	
+	<div class="grid-btn">
+			<div class="form-group col-sm-2">
+				<input type="text" class="form-control" value="监测站号" readonly="readonly">
+			</div>
+			
+			<div class="form-group col-sm-2">
+				<input type="text" class="form-control" value="命令" readonly="readonly">
+			</div>
+			<div class="form-group col-sm-2">
+				<input type="text" class="form-control" value="参数值" readonly="readonly">
+			</div>
+			
+			<div class="form-group col-sm-2">
+				<input type="text" class="form-control" value="发送指令" readonly="readonly">
+			</div>
+	</div>
+	
+	<div class="grid-btn">
+			<div class="form-group col-sm-2">
+				<input type="text" class="form-control" v-model="q.mn_name" @keyup.enter="setInterval">
+			</div>
+			
+			<div class="form-group col-sm-2">
+				<input type="text" class="form-control" value="设置上报时间间隔" readonly="readonly"
+    						@keyup.enter="setInterval"/>
+			</div>
+			<div class="form-group col-sm-2">
+				<input type="text" class="form-control" value="30"  onkeyup="value=value.replace(/[^\d]/g,'')" 
+        	v-model="q.Para" @keyup.enter="setInterval" placeholder="请输入数字(秒)">
+			</div>
+			<a class="btn btn-default" @click="setInterval">发送指令</a>
+	</div>
+	
+	
+	    <table id="table" >
+	<thead>
+		<tr>
+		    <th align="center">监测站号</th>
+			<th align="center">命令</th>
+			<th align="center">参数值</th>
+			<th align="center">发送指令</th>
+		</tr>
+	</thead>
+	<tbody>
+
+    <tr>
+    	<form>
+    	<td>a</td>
+    	<td>a</td>
+        <td>a</td>
+        <td>a</td>
+       </form>
+     </tr>   
+     
+     
+     <tr>
+     <form>
+    	<td><select id="edu" name="mn_name" style="width:140px;height:30px;" >
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+		</select> </td>
+    	<td ><input type="text" name="CN" style="width:150px;height:30px;border: 0px" readonly="readonly" value="设置现场机时间" /> </td>
+        <td><input  type="text" name="Para"  class="laydate-icon" id="start" name="StartTime" style="width:200px;height:30px;" ></td>
+        <td><input  class="refresh_time" type="submit" name="submit" value="发送指令"   style="width:150px;height:30px;">
+    </form>
+     </tr>    
+     
+     
+     <tr>
+      <form>
+    	<td><select id="edu" name="mn_name" style="width:140px;height:30px;">
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+		</select> </td>
+    	<td><input type="text" name="CN" value="获取现场机时间" readonly="readonly" style="width:150px;height:30px;border: 0px" /></td>
+        <td><input type="text" name="Para" value="NULL" readonly="readonly" style="width:200px;height:30px;"></td>
+         <td><input  class="refresh_time" type="submit" name="submit" value="发送指令"   style="width:150px;height:30px;">
+        </form>
+     </tr>
+     
+      <tr>
+      <form>
+    	<td><select id="edu" name="mn_name" style="width:140px;height:30px;">
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+		</select> </td>
+    	<td><input type="text" name="CN" value="开始采集实时数据" readonly="readonly" style="width:150px;height:30px;border: 0px" /></td>
+        <td><input type="text" name="Para" value="NULL" readonly="readonly" style="width:200px;height:30px;"></td>
+         <td><input  class="refresh_time" type="submit" name="submit" value="发送指令"   style="width:150px;height:30px;">
+        </form>
+     </tr>  
+   
+       <tr>
+      <form>
+    	<td><select id="edu" name="mn_name" style="width:140px;height:30px;">
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+		</select> </td>
+    	<td><input type="text" name="CN" value="停止采集实时数据" readonly="readonly" style="width:150px;height:30px;border: 0px" /></td>
+        <td><input type="text" name="Para" value="NULL" readonly="readonly" style="width:200px;height:30px;"></td>
+         <td><input class="refresh_time" type="submit" name="submit" value="发送指令" style="width:150px;height:30px;">
+        </form>
+     </tr>
+    
+      <tr>
+      <form>
+    	<td><select id="edu" name="mn_name" style="width:140px;height:30px;">
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+		</select> </td>
+    	<td><input type="text" name="CN" value="远程校准" readonly="readonly" style="width:150px;height:30px;border: 0px" /></td>
+        <td>参数：<select name="Para" id="Para" style="width:80px;height:30px;" onclick="setCookie('Para',this.selectedIndex)">
+         					<option value="SO2">SO2</option>
+         					<option value="SO2">NO2</option>
+         					<option value="SO2">CO</option>
+         					<option value="SO2">O3</option>
+         					<option value="SO2">TVOC</option>
+        			</select>
+          <input type="text" name="data" style="width:50px;height:30px;" value="0"  onkeyup="value=value.replace(/[^\d]/g,'')" placeholder="请输入数字">(ppb)
+          </td>
+         <td><input class="refresh_time" type="submit" name="submit" value="发送指令" style="width:150px;height:30px;">
+        </form>
+     </tr>
+    
+	</tbody>
+</table></div>
+</div>
+<script src="${request.contextPath}/statics/js/modules/station/endpointcontrol.js?_${.now?long}"></script>
+</body>
+</html>

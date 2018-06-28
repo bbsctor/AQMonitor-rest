@@ -1,6 +1,6 @@
-package com.stkj.AQMonitor.module.endpoint.entity;
+package io.renren.modules.endpoint.entity;
 
-public class StationMn {
+public class StationMN {
     private Integer id;
 
     private String siteName;
