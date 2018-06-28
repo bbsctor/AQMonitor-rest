@@ -25,3 +25,4 @@ out/
 # Mac
 .DS_Store
 /bin/
+/.apt_generated/
