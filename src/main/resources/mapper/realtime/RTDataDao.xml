@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="io.renren.modules.realtime.dao.RealDataDao">
-  <resultMap id="BaseResultMap" type="io.renren.modules.realtime.entity.RealData" >
+<mapper namespace="com.stkj.modules.realtime.dao.RealDataDao">
+  <resultMap id="BaseResultMap" type="com.stkj.modules.realtime.entity.RealData" >
     <id column="ID" property="id" jdbcType="INTEGER" />
     <result column="time" property="time" jdbcType="TIMESTAMP" />
     <result column="site_name" property="siteName" jdbcType="VARCHAR" />
@@ -119,7 +119,7 @@
     delete from realdata
     where ID = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="io.renren.modules.realtime.entity.RealData" >
+  <insert id="insert" parameterType="com.stkj.modules.realtime.entity.RealData" >
     insert into realdata (ID, time, site_name, 
       site_num, MN, longtitude, 
       latitude, AQIindex, AQIlevel, 
@@ -143,7 +143,7 @@
       #{co,jdbcType=DOUBLE}, #{coFlag,jdbcType=VARCHAR}, #{o3,jdbcType=DOUBLE}, #{o3Flag,jdbcType=VARCHAR}, 
       #{moisture,jdbcType=DOUBLE}, #{moistrueFlag,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="io.renren.modules.realtime.entity.RealData" >
+  <insert id="insertSelective" parameterType="com.stkj.modules.realtime.entity.RealData" >
     insert into realdata
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -348,7 +348,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="io.renren.modules.realtime.entity.RealData" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.stkj.modules.realtime.entity.RealData" >
     update realdata
     <set >
       <if test="time != null" >
@@ -450,7 +450,7 @@
     </set>
     where ID = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="io.renren.modules.realtime.entity.RealData" >
+  <update id="updateByPrimaryKey" parameterType="com.stkj.modules.realtime.entity.RealData" >
     update realdata
     set time = #{time,jdbcType=TIMESTAMP},
       site_name = #{siteName,jdbcType=VARCHAR},
