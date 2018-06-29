@@ -31,14 +31,15 @@ public class RTDataController extends AbstractController {
 	 * 所有用户列表
 	 */
 	@RequestMapping("/list")
-	@RequiresPermissions("sys:user:list")
+	@RequiresPermissions("realtime:rtdata:list")
 	public R list(@RequestParam Map<String, Object> params){
 		PageUtils page = rtDataService.queryPage(params);
 
 		return R.ok().put("page", page);
 	}
 	
-	@RequestMapping(value = "/QueryByTimeAndMN")
+	@RequestMapping(value = "/data")
+	@RequiresPermissions("realtime:rtdata:data")
 	public @ResponseBody List<RealData> TimeAndMN(@RequestParam Map<String, Object> params) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<RealData> RealData =rtDataService.queryData(params);

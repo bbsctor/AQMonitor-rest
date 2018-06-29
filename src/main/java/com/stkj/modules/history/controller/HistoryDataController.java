@@ -28,14 +28,15 @@ public class HistoryDataController extends AbstractController {
 	 * 所有用户列表
 	 */
 	@RequestMapping("/list")
-	@RequiresPermissions("sys:user:list")
+	@RequiresPermissions("history:historydata:list")
 	public R list(@RequestParam Map<String, Object> params){
 		PageUtils page = historyDataService.queryPage(params);
 
 		return R.ok().put("page", page);
 	}
 	
-	@RequestMapping(value = "/QueryByTimeAndMN")
+	@RequestMapping(value = "/data")
+	@RequiresPermissions("history:historydata:data")
 	public @ResponseBody List<HistoryData> TimeAndMN(@RequestParam Map<String, Object> params) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<HistoryData> historyData =historyDataService.queryData(params);

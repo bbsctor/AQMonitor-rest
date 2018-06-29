@@ -43,7 +43,7 @@ public class EndpointControlController extends AbstractController {
 	 * 所有用户列表
 	 */
 	@RequestMapping("/Connect")
-	@RequiresPermissions("sys:user:list")
+	@RequiresPermissions("endpoint:endpointcontrol:connect")
 	public R connect(@RequestParam Map<String, Object> params){
 		String mn_name = (String)params.get("mn_name");
 		String data = (String)params.get("data");

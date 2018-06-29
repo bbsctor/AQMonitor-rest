@@ -103,9 +103,10 @@ public class DataFilterAspect {
 //        }
 
         StringBuilder sqlFilter = new StringBuilder();
-        sqlFilter.append(" (");
+        //sqlFilter.append(" (");
 
         if(deptIdList.size() > 0){
+        	sqlFilter.append(" (");
             sqlFilter.append(tableAlias).append(dataFilter.deptId()).append(" in(").append(StringUtils.join(deptIdList, ",")).append(")");
         }
 
@@ -115,9 +116,10 @@ public class DataFilterAspect {
                 sqlFilter.append(" or ");
             }
             sqlFilter.append(tableAlias).append(dataFilter.userId()).append("=").append(user.getUserId());
+            sqlFilter.append(")");
         }
 
-        sqlFilter.append(")");
+        //sqlFilter.append(")");
 
         return sqlFilter.toString();
     }

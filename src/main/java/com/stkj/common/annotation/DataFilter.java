@@ -16,9 +16,6 @@
 
 package com.stkj.common.annotation;
 
-import com.alibaba.fastjson.JSONObject;
-import com.google.gson.JsonObject;
-
 import java.lang.annotation.*;
 
 /**

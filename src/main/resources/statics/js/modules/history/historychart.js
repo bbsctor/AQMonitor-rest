@@ -265,7 +265,7 @@ var vm = new Vue({
                 type : "post",		//post请求方式
               //  contentType:"application/json;charset=utf-8",
                 async : true,		//异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-                url : baseURL + '/history/historydata/QueryByTimeAndMN',	//请求发送到ShowInfoIndexServlet处
+                url : baseURL + '/history/historydata/data',	//请求发送到ShowInfoIndexServlet处
                 data: {'mn': vm.q.username,'begindate': vm.q.begindate, 'enddate':vm.q.enddate},		//提交数据到后台
                 dataType : "json",		//返回数据形式为json
                 
