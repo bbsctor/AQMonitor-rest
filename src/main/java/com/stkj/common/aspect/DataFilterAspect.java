@@ -30,6 +30,8 @@ import com.stkj.common.annotation.DataFilter;
 import com.stkj.common.exception.RRException;
 import com.stkj.common.utils.Constant;
 import com.stkj.modules.sys.entity.SysUserEntity;
+import com.stkj.modules.sys.service.SysDeptService;
+import com.stkj.modules.sys.service.SysRoleDeptService;
 import com.stkj.modules.sys.service.SysUserRoleService;
 import com.stkj.modules.sys.shiro.ShiroUtils;
 
@@ -45,11 +47,11 @@ import java.util.*;
 @Component
 public class DataFilterAspect {
 //    @Autowired
-//    private SysDeptService sysDeptService;
+    private SysDeptService sysDeptService;
     @Autowired
     private SysUserRoleService sysUserRoleService;
 //    @Autowired
-//    private SysRoleDeptService sysRoleDeptService;
+    private SysRoleDeptService sysRoleDeptService;
 
     @Pointcut("@annotation(com.stkj.common.annotation.DataFilter)")
     public void dataFilterCut() {
@@ -90,23 +92,22 @@ public class DataFilterAspect {
         Set<Long> deptIdList = new HashSet<>();
 
         //用户角色对应的部门ID列表
-//        List<Long> roleIdList = sysUserRoleService.queryRoleIdList(user.getUserId());
-//        if(roleIdList.size() > 0){
-//            List<Long> userDeptIdList = sysRoleDeptService.queryDeptIdList(roleIdList.toArray(new Long[roleIdList.size()]));
-//            deptIdList.addAll(userDeptIdList);
-//        }
+        List<Long> roleIdList = sysUserRoleService.queryRoleIdList(user.getUserId());
+        if(roleIdList.size() > 0){
+            List<Long> userDeptIdList = sysRoleDeptService.queryDeptIdList(roleIdList.toArray(new Long[roleIdList.size()]));
+            deptIdList.addAll(userDeptIdList);
+        }
 
-//        //用户子部门ID列表
-//        if(dataFilter.subDept()){
-//            List<Long> subDeptIdList = sysDeptService.getSubDeptIdList(user.getDeptId());
-//            deptIdList.addAll(subDeptIdList);
-//        }
+        //用户子部门ID列表
+        if(dataFilter.subDept()){
+            List<Long> subDeptIdList = sysDeptService.getSubDeptIdList(user.getDeptId());
+            deptIdList.addAll(subDeptIdList);
+        }
 
         StringBuilder sqlFilter = new StringBuilder();
-        //sqlFilter.append(" (");
+        sqlFilter.append(" (");
 
         if(deptIdList.size() > 0){
-        	sqlFilter.append(" (");
             sqlFilter.append(tableAlias).append(dataFilter.deptId()).append(" in(").append(StringUtils.join(deptIdList, ",")).append(")");
         }
 
@@ -116,10 +117,9 @@ public class DataFilterAspect {
                 sqlFilter.append(" or ");
             }
             sqlFilter.append(tableAlias).append(dataFilter.userId()).append("=").append(user.getUserId());
-            sqlFilter.append(")");
         }
 
-        //sqlFilter.append(")");
+        sqlFilter.append(")");
 
         return sqlFilter.toString();
     }

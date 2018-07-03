@@ -20,14 +20,12 @@ package com.stkj.modules.sys.entity;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.stkj.common.validator.group.AddGroup;
 import com.stkj.common.validator.group.UpdateGroup;
 
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
-
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
@@ -94,14 +92,13 @@ public class SysUserEntity implements Serializable {
 	/**
 	 * 创建时间
 	 */
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date createTime;
 
-//	/**
-//	 * 部门ID
-//	 */
-//	@NotNull(message="部门不能为空", groups = {AddGroup.class, UpdateGroup.class})
-//	private Long deptId;
+	/**
+	 * 部门ID
+	 */
+	@NotNull(message="部门不能为空", groups = {AddGroup.class, UpdateGroup.class})
+	private Long deptId;
 
 	/**
 	 * 部门名称
@@ -237,13 +234,13 @@ public class SysUserEntity implements Serializable {
 		this.salt = salt;
 	}
 
-//	public Long getDeptId() {
-//		return deptId;
-//	}
-//
-//	public void setDeptId(Long deptId) {
-//		this.deptId = deptId;
-//	}
+	public Long getDeptId() {
+		return deptId;
+	}
+
+	public void setDeptId(Long deptId) {
+		this.deptId = deptId;
+	}
 
 	public String getDeptName() {
 		return deptName;
