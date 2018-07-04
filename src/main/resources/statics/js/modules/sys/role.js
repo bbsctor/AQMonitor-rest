@@ -5,7 +5,7 @@ $(function () {
         colModel: [
             { label: '角色ID', name: 'roleId', index: "role_id", width: 45, key: true },
             { label: '角色名称', name: 'roleName', index: "role_name", width: 75 },
-            { label: '所属部门', name: 'deptName', sortable: false, width: 75 },
+            // { label: '所属部门', name: 'deptName', sortable: false, width: 75 },
             { label: '备注', name: 'remark', width: 100 },
             { label: '创建时间', name: 'createTime', index: "create_time", width: 80}
         ],
@@ -73,25 +73,25 @@ var dept_setting = {
 };
 
 //数据树
-var data_ztree;
-var data_setting = {
-    data: {
-        simpleData: {
-            enable: true,
-            idKey: "deptId",
-            pIdKey: "parentId",
-            rootPId: -1
-        },
-        key: {
-            url:"nourl"
-        }
-    },
-    check:{
-        enable:true,
-        nocheckInherit:true,
-        chkboxType:{ "Y" : "", "N" : "" }
-    }
-};
+// var data_ztree;
+// var data_setting = {
+//     data: {
+//         simpleData: {
+//             enable: true,
+//             idKey: "deptId",
+//             pIdKey: "parentId",
+//             rootPId: -1
+//         },
+//         key: {
+//             url:"nourl"
+//         }
+//     },
+//     check:{
+//         enable:true,
+//         nocheckInherit:true,
+//         chkboxType:{ "Y" : "", "N" : "" }
+//     }
+// };
 
 var vm = new Vue({
     el:'#rrapp',
@@ -113,12 +113,12 @@ var vm = new Vue({
         add: function(){
             vm.showList = false;
             vm.title = "新增";
-            vm.role = {deptName:null, deptId:null};
+            //vm.role = {deptName:null, deptId:null};
             vm.getMenuTree(null);
 
-            vm.getDept();
+            // vm.getDept();
 
-            vm.getDataTree();
+            //vm.getDataTree();
         },
         update: function () {
             var roleId = getSelectedRow();
@@ -131,7 +131,7 @@ var vm = new Vue({
             vm.getDataTree();
             vm.getMenuTree(roleId);
 
-            vm.getDept();
+            // vm.getDept();
         },
         del: function () {
             var roleIds = getSelectedRows();
@@ -169,13 +169,13 @@ var vm = new Vue({
                 }
 
                 //勾选角色所拥有的部门数据权限
-                var deptIds = vm.role.deptIdList;
-                for(var i=0; i<deptIds.length; i++) {
-                    var node = data_ztree.getNodeByParam("deptId", deptIds[i]);
-                    data_ztree.checkNode(node, true, false);
-                }
+                // var deptIds = vm.role.deptIdList;
+                // for(var i=0; i<deptIds.length; i++) {
+                //     var node = data_ztree.getNodeByParam("deptId", deptIds[i]);
+                //     data_ztree.checkNode(node, true, false);
+                // }
 
-                vm.getDept();
+                // vm.getDept();
             });
         },
         saveOrUpdate: function () {
@@ -188,12 +188,12 @@ var vm = new Vue({
             vm.role.menuIdList = menuIdList;
 
             //获取选择的数据
-            var nodes = data_ztree.getCheckedNodes(true);
-            var deptIdList = new Array();
-            for(var i=0; i<nodes.length; i++) {
-                deptIdList.push(nodes[i].deptId);
-            }
-            vm.role.deptIdList = deptIdList;
+            //var nodes = data_ztree.getCheckedNodes(true);
+            // var deptIdList = new Array();
+            // for(var i=0; i<nodes.length; i++) {
+            //     deptIdList.push(nodes[i].deptId);
+            // }
+            // vm.role.deptIdList = deptIdList;
 
             var url = vm.role.roleId == null ? "sys/role/save" : "sys/role/update";
             $.ajax({
@@ -232,39 +232,39 @@ var vm = new Vue({
                 data_ztree.expandAll(true);
             });
         },
-        getDept: function(){
-            //加载部门树
-            $.get(baseURL + "sys/dept/list", function(r){
-                dept_ztree = $.fn.zTree.init($("#deptTree"), dept_setting, r);
-                var node = dept_ztree.getNodeByParam("deptId", vm.role.deptId);
-                if(node != null){
-                    dept_ztree.selectNode(node);
-
-                    vm.role.deptName = node.name;
-                }
-            })
-        },
-        deptTree: function(){
-            layer.open({
-                type: 1,
-                offset: '50px',
-                skin: 'layui-layer-molv',
-                title: "选择部门",
-                area: ['300px', '450px'],
-                shade: 0,
-                shadeClose: false,
-                content: jQuery("#deptLayer"),
-                btn: ['确定', '取消'],
-                btn1: function (index) {
-                    var node = dept_ztree.getSelectedNodes();
-                    //选择上级部门
-                    vm.role.deptId = node[0].deptId;
-                    vm.role.deptName = node[0].name;
-
-                    layer.close(index);
-                }
-            });
-        },
+        // getDept: function(){
+        //     //加载部门树
+        //     $.get(baseURL + "sys/dept/list", function(r){
+        //         dept_ztree = $.fn.zTree.init($("#deptTree"), dept_setting, r);
+        //         var node = dept_ztree.getNodeByParam("deptId", vm.role.deptId);
+        //         if(node != null){
+        //             dept_ztree.selectNode(node);
+        //
+        //             vm.role.deptName = node.name;
+        //         }
+        //     })
+        // },
+        // deptTree: function(){
+        //     layer.open({
+        //         type: 1,
+        //         offset: '50px',
+        //         skin: 'layui-layer-molv',
+        //         title: "选择部门",
+        //         area: ['300px', '450px'],
+        //         shade: 0,
+        //         shadeClose: false,
+        //         content: jQuery("#deptLayer"),
+        //         btn: ['确定', '取消'],
+        //         btn1: function (index) {
+        //             var node = dept_ztree.getSelectedNodes();
+        //             //选择上级部门
+        //             vm.role.deptId = node[0].deptId;
+        //             vm.role.deptName = node[0].name;
+        //
+        //             layer.close(index);
+        //         }
+        //     });
+        // },
         reload: function () {
             vm.showList = true;
             var page = $("#jqGrid").jqGrid('getGridParam','page');

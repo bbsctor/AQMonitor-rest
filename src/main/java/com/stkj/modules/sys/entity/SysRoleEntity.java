@@ -59,8 +59,8 @@ public class SysRoleEntity implements Serializable {
 //	/**
 //	 * 部门ID
 //	 */
-//	@NotNull(message="部门不能为空")
-//	private Long deptId;
+	@NotNull(message="部门不能为空")
+	private Long deptId;
 
 	/**
 	 * 部门名称
@@ -143,13 +143,13 @@ public class SysRoleEntity implements Serializable {
 		this.menuIdList = menuIdList;
 	}
 
-//	public Long getDeptId() {
-//		return deptId;
-//	}
-//
-//	public void setDeptId(Long deptId) {
-//		this.deptId = deptId;
-//	}
+	public Long getDeptId() {
+		return deptId;
+	}
+
+	public void setDeptId(Long deptId) {
+		this.deptId = deptId;
+	}
 
 	public String getDeptName() {
 		return deptName;

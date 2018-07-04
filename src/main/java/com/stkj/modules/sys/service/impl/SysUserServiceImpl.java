@@ -25,7 +25,9 @@ import com.stkj.common.utils.Constant;
 import com.stkj.common.utils.PageUtils;
 import com.stkj.common.utils.Query;
 import com.stkj.modules.sys.dao.SysUserDao;
+import com.stkj.modules.sys.entity.SysDeptEntity;
 import com.stkj.modules.sys.entity.SysUserEntity;
+import com.stkj.modules.sys.service.SysDeptService;
 import com.stkj.modules.sys.service.SysUserRoleService;
 import com.stkj.modules.sys.service.SysUserService;
 import com.stkj.modules.sys.shiro.ShiroUtils;
@@ -52,8 +54,8 @@ import java.util.Map;
 public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> implements SysUserService {
 	@Autowired
 	private SysUserRoleService sysUserRoleService;
-//	@Autowired
-//	private SysDeptService sysDeptService;
+	@Autowired
+	private SysDeptService sysDeptService;
 
 	@Override
 	public List<Long> queryAllMenuId(Long userId) {
@@ -72,10 +74,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
 				.addFilterIfNeed(params.get(Constant.SQL_FILTER) != null, (String)params.get(Constant.SQL_FILTER))
 		);
 
-//		for(SysUserEntity sysUserEntity : page.getRecords()){
-//			SysDeptEntity sysDeptEntity = sysDeptService.selectById(sysUserEntity.getDeptId());
-//			sysUserEntity.setDeptName(sysDeptEntity.getName());
-//		}
+		for(SysUserEntity sysUserEntity : page.getRecords()){
+			SysDeptEntity sysDeptEntity = sysDeptService.selectById(sysUserEntity.getDeptId());
+			sysUserEntity.setDeptName(sysDeptEntity.getName());
+		}
 
 		return new PageUtils(page);
 	}

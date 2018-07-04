@@ -24,8 +24,13 @@ import com.stkj.common.utils.Constant;
 import com.stkj.common.utils.PageUtils;
 import com.stkj.common.utils.Query;
 import com.stkj.modules.sys.dao.SysRoleDao;
+import com.stkj.modules.sys.entity.SysDeptEntity;
 import com.stkj.modules.sys.entity.SysRoleEntity;
-import com.stkj.modules.sys.service.*;
+import com.stkj.modules.sys.service.SysDeptService;
+import com.stkj.modules.sys.service.SysRoleDeptService;
+import com.stkj.modules.sys.service.SysRoleMenuService;
+import com.stkj.modules.sys.service.SysRoleService;
+import com.stkj.modules.sys.service.SysUserRoleService;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,11 +53,12 @@ import java.util.Map;
 public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> implements SysRoleService {
 	@Autowired
 	private SysRoleMenuService sysRoleMenuService;
-//	@Autowired
-//	private SysRoleDeptService sysRoleDeptService;
+	@Autowired
+	private SysRoleDeptService sysRoleDeptService;
 	@Autowired
 	private SysUserRoleService sysUserRoleService;
-
+	@Autowired
+	private SysDeptService sysDeptService;
 
 	@Override
 	@DataFilter(subDept = true, user = false)
@@ -66,13 +72,12 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
 				.addFilterIfNeed(params.get(Constant.SQL_FILTER) != null, (String)params.get(Constant.SQL_FILTER))
 		);
 
-
-//		for(SysRoleEntity sysRoleEntity : page.getRecords()){
-//			SysDeptEntity sysDeptEntity = sysDeptService.selectById(sysRoleEntity.getDeptId());
-//			if(sysDeptEntity != null){
-//				sysRoleEntity.setDeptName(sysDeptEntity.getName());
-//			}
-//		}
+		for(SysRoleEntity sysRoleEntity : page.getRecords()){
+			SysDeptEntity sysDeptEntity = sysDeptService.selectById(sysRoleEntity.getDeptId());
+			if(sysDeptEntity != null){
+				sysRoleEntity.setDeptName(sysDeptEntity.getName());
+			}
+		}
 
 		return new PageUtils(page);
 	}
@@ -86,8 +91,8 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
 		//保存角色与菜单关系
 		sysRoleMenuService.saveOrUpdate(role.getRoleId(), role.getMenuIdList());
 
-//		//保存角色与部门关系
-//		sysRoleDeptService.saveOrUpdate(role.getRoleId(), role.getDeptIdList());
+		//保存角色与部门关系
+		sysRoleDeptService.saveOrUpdate(role.getRoleId(), role.getDeptIdList());
 	}
 
 	@Override
@@ -98,8 +103,8 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
 		//更新角色与菜单关系
 		sysRoleMenuService.saveOrUpdate(role.getRoleId(), role.getMenuIdList());
 
-//		//保存角色与部门关系
-//		sysRoleDeptService.saveOrUpdate(role.getRoleId(), role.getDeptIdList());
+		//保存角色与部门关系
+		sysRoleDeptService.saveOrUpdate(role.getRoleId(), role.getDeptIdList());
 	}
 
 	@Override
@@ -111,8 +116,8 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
 		//删除角色与菜单关联
 		sysRoleMenuService.deleteBatch(roleIds);
 
-//		//删除角色与部门关联
-//		sysRoleDeptService.deleteBatch(roleIds);
+		//删除角色与部门关联
+		sysRoleDeptService.deleteBatch(roleIds);
 
 		//删除角色与用户关联
 		sysUserRoleService.deleteBatch(roleIds);
