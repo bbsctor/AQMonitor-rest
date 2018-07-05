@@ -3,7 +3,7 @@ $(function () {
         url: baseURL + 'station/stationinfo/list',
         datatype: "json",
         colModel: [			
-			{ label: '站点ID', name: 'id', width: 100, key: true},
+			//{ label: '站点ID', name: 'id', width: 100, key: true},
 			{ label: '站点名称', name: 'siteName', width: 75 },
             { label: '站点编号', name: 'siteNum', width: 75 },
 			{ label: '省份', name: 'province', width: 75 },
@@ -37,32 +37,15 @@ $(function () {
         }
     });
 });
-var setting = {
-    data: {
-        simpleData: {
-            enable: true,
-            idKey: "deptId",
-            pIdKey: "parentId",
-            rootPId: -1
-        },
-        key: {
-            url:"nourl"
-        }
-    }
-};
-var ztree;
 
 var vm = new Vue({
     el:'#rrapp',
     data:{
         q:{
-            username: null,
-            begindate:null,
-            enddate:null
+        	name: null
         },
         showList: true,
         title:null,
-        roleList:{},
         stationinfo:{ }
     },
     methods: {
@@ -75,44 +58,41 @@ var vm = new Vue({
             vm.stationinfo = {};
         },
         update: function () {
-            var userId = getSelectedRow();
-            if(userId == null){
-                return ;
-            }
-
-            vm.showList = false;
+        	var id = getSelectedRow();
+			if(id == null){
+				return ;
+			}
+			vm.showList = false;
             vm.title = "修改";
-
-            vm.getUser(userId);
-            //获取角色信息
-            this.getRoleList();
+            
+            vm.getInfo(id)
         },
         del: function () {
-            var userIds = getSelectedRows();
-            if(userIds == null){
-                return ;
-            }
-
-            confirm('确定要删除选中的记录？', function(){
-                $.ajax({
-                    type: "POST",
-                    url: baseURL + "sys/user/delete",
+        	var ids = getSelectedRows();
+			if(ids == null){
+				return ;
+			}
+			
+			confirm('确定要删除选中的记录？', function(){
+				$.ajax({
+					type: "POST",
+				    url: baseURL + "station/stationinfo/delete",
                     contentType: "application/json",
-                    data: JSON.stringify(userIds),
-                    success: function(r){
-                        if(r.code == 0){
-                            alert('操作成功', function(){
-                                vm.reload();
-                            });
-                        }else{
-                            alert(r.msg);
-                        }
-                    }
-                });
-            });
+				    data: JSON.stringify(ids),
+				    success: function(r){
+						if(r.code == 0){
+							alert('操作成功', function(index){
+								$("#jqGrid").trigger("reloadGrid");
+							});
+						}else{
+							alert(r.msg);
+						}
+					}
+				});
+			});
         },
         saveOrUpdate: function () {
-            var url = vm.stationinfo.siteId == null ? "station/stationinfo/save" : "station/stationinfo/update";
+            var url = vm.stationinfo.id == null ? "station/stationinfo/save" : "station/stationinfo/update";
             $.ajax({
                 type: "POST",
                 url: baseURL + url,
@@ -129,40 +109,11 @@ var vm = new Vue({
                 }
             });
         },
-        getUser: function(userId){
-            $.get(baseURL + "sys/user/info/"+userId, function(r){
-                vm.user = r.user;
-                vm.user.password = null;
-
-                vm.getDept();
+		getInfo: function(id){
+			$.get(baseURL + "station/stationinfo/info/"+id, function(r){
+                vm.stationinfo = r.stationinfo;
             });
-        },
-        getRoleList: function(){
-            $.get(baseURL + "sys/role/select", function(r){
-                vm.roleList = r.list;
-            });
-        },
-        deptTree: function(){
-            layer.open({
-                type: 1,
-                offset: '50px',
-                skin: 'layui-layer-molv',
-                title: "选择部门",
-                area: ['300px', '450px'],
-                shade: 0,
-                shadeClose: false,
-                content: jQuery("#deptLayer"),
-                btn: ['确定', '取消'],
-                btn1: function (index) {
-                    var node = ztree.getSelectedNodes();
-                    //选择上级部门
-                    vm.user.deptId = node[0].deptId;
-                    vm.user.deptName = node[0].name;
-
-                    layer.close(index);
-                }
-            });
-        },
+		},
         reload: function () {
             vm.showList = true;
             var page = $("#jqGrid").jqGrid('getGridParam','page');

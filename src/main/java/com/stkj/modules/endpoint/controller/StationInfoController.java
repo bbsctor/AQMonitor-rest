@@ -1,5 +1,6 @@
 package com.stkj.modules.endpoint.controller;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,6 +28,7 @@ import com.stkj.modules.endpoint.service.StationInfoService;
 import com.stkj.modules.realtime.entity.RealData;
 import com.stkj.modules.realtime.service.RTDataService;
 import com.stkj.modules.sys.controller.AbstractController;
+import com.stkj.modules.sys.entity.SysDictEntity;
 import com.stkj.modules.sys.entity.SysUserEntity;
 
 @RestController
@@ -55,6 +58,17 @@ public class StationInfoController extends AbstractController {
 		return stationInfo;
 	}
 	
+    /**
+     * 信息
+     */
+    @RequestMapping("/info/{id}")
+    @RequiresPermissions("sys:dict:info")
+    public R info(@PathVariable("id") Long id){
+        StationInfo stationinfo = stationInfoService.selectById(id);
+
+        return R.ok().put("stationinfo", stationinfo);
+    }
+	
 	/**
 	 * 保存站点信息
 	 */
@@ -68,4 +82,29 @@ public class StationInfoController extends AbstractController {
 		
 		return R.ok();
 	}
+	
+    /**
+     * 修改
+     */
+    @RequestMapping("/update")
+    @RequiresPermissions("station:stationinfo:update")
+    public R update(@RequestBody StationInfo stationinfo){
+        //校验类型
+        ValidatorUtils.validateEntity(stationinfo);
+
+        stationInfoService.updateById(stationinfo);
+
+        return R.ok();
+    }
+    
+    /**
+     * 删除
+     */
+    @RequestMapping("/delete")
+    @RequiresPermissions("station:stationinfo:delete")
+    public R delete(@RequestBody Long[] ids){
+    	stationInfoService.deleteBatchIds(Arrays.asList(ids));
+
+        return R.ok();
+    }
 }
