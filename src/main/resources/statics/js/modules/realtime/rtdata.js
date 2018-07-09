@@ -59,8 +59,8 @@ var vm = new Vue({
     data:{
         q:{
             username: null,
-            begindate:null,
-            enddate:null
+            begin:null,
+            end:null
         },
         showList: true,
         title:null,
@@ -73,25 +73,31 @@ var vm = new Vue({
         }
     },
     methods: {
-    	getBeginDate: function () {
+    	getBegin: function () {
 
     	　　　　laydate({
 
     	　　　　　　elem: '#start',
-    	　　　　　　choose: function (date) {
+    	        format: 'YYYY-MM-DD hh:mm:ss', // 分隔符可以任意定义
+    	        istime: true,
+    	　　　　　　choose: function (begin) {
 
-    	　　　　　　　　vm.q.begindate = date;
+    	　　　　　　　　vm.q.begin = begin;
+    			  //alert(begin);
     	　　　　　　}
     	　　　　});
     	},
-    	getEndDate: function () {
+    	getEnd: function () {
 
     	　　　　laydate({
 
     	　　　　　　elem: '#end',
+                format: 'YYYY-MM-DD hh:mm:ss', // 分隔符可以任意定义
+                istime: true,
     	　　　　　　choose: function (date) {
 
-    	　　　　　　　　vm.q.enddate = date;
+    	　　　　　　　　vm.q.end = date;
+    				alert(date);
     	　　　　　　}
     	　　　　});
     	},
@@ -214,7 +220,7 @@ var vm = new Vue({
             vm.showList = true;
             var page = $("#jqGrid").jqGrid('getGridParam','page');
             $("#jqGrid").jqGrid('setGridParam',{
-                postData:{'mn': vm.q.username,'begindate': vm.q.begindate, 'enddate':vm.q.enddate},
+                postData:{'mn': vm.q.username,'begindate': vm.q.begin, 'enddate':vm.q.end},
                 page:page
             }).trigger("reloadGrid");
         }
