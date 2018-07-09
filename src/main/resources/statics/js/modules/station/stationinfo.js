@@ -6,6 +6,7 @@ $(function () {
 			//{ label: '站点ID', name: 'id', width: 100, key: true},
 			{ label: '站点名称', name: 'siteName', width: 75 },
             { label: '站点编号', name: 'siteNum', width: 75 },
+            { label: '站点坐标', name: 'point', width: 75 },
 			{ label: '省份', name: 'province', width: 75 },
 			{ label: '城市', name: 'city', width: 75 },
 			{ label: '区域', name: 'area', width: 75 },

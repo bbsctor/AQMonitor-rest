@@ -14,8 +14,18 @@ public class StationInfo {
     private String area;
 
     private Integer devicecounts;
+    
+    private String point;
 
-    public Integer getId() {
+    public String getPoint() {
+		return point;
+	}
+
+	public void setPoint(String point) {
+		this.point = point;
+	}
+
+	public Integer getId() {
         return id;
     }
 

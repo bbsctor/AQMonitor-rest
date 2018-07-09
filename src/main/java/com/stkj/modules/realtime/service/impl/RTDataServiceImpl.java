@@ -75,6 +75,4 @@ public class RTDataServiceImpl extends ServiceImpl<RealDataDao, RealData> implem
 		}
 		return list;
 	}
-	
-	
 }

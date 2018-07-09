@@ -74,7 +74,7 @@ var vm = new Vue({
     	　　　　　　choose: function (begin) {
 
     	　　　　　　　　vm.q.begin = begin;
-    			  alert(vm.q.begin);
+    			  //alert(vm.q.begin);
     	　　　　　　}
     	　　　　});
     	},
@@ -88,7 +88,7 @@ var vm = new Vue({
     	　　　　　　choose: function (end) {
 
     	　　　　　　　　vm.q.end = end;
-    			  alert(vm.q.end);
+    			  //alert(vm.q.end);
     	　　　　　　}
     	　　　　});
     	},
