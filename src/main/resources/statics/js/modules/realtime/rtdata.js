@@ -73,6 +73,28 @@ var vm = new Vue({
         }
     },
     methods: {
+    	getBeginDate: function () {
+
+    	　　　　laydate({
+
+    	　　　　　　elem: '#start',
+    	　　　　　　choose: function (date) {
+
+    	　　　　　　　　vm.q.begindate = date;
+    	　　　　　　}
+    	　　　　});
+    	},
+    	getEndDate: function () {
+
+    	　　　　laydate({
+
+    	　　　　　　elem: '#end',
+    	　　　　　　choose: function (date) {
+
+    	　　　　　　　　vm.q.enddate = date;
+    	　　　　　　}
+    	　　　　});
+    	},
         query: function () {
             vm.reload();
         },
