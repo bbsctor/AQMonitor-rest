@@ -28,18 +28,18 @@ public class RTDataServiceImpl extends ServiceImpl<RealDataDao, RealData> implem
 	@Override
 	//@DataFilter(subDept = true, user = false)
 	public PageUtils queryPage(Map<String, Object> params) {
-		String username = (String)params.get("mn");
-		String begindate = (String)params.get("begindate");
-		String enddate = (String)params.get("enddate");
+		String mn = (String)params.get("mn");
+		String begindatetime = (String)params.get("begindatetime");
+		String enddatetime = (String)params.get("enddatetime");
 		Page<RealData> page;
 		
-		if(begindate != null && enddate != null)
+		if(begindatetime != null && enddatetime != null && begindatetime.isEmpty() == false && enddatetime.isEmpty() == false  )
 		{
 			page = this.selectPage(
 					new Query<RealData>(params).getPage(),
 					new EntityWrapper<RealData>()
-						.like(StringUtils.isNotBlank(username),"mn", username)
-						.between("time", begindate, enddate)
+						.like(StringUtils.isNotBlank(mn),"mn", mn)
+						.between("time", begindatetime, enddatetime)
 						.addFilterIfNeed(params.get(Constant.SQL_FILTER) != null, (String)params.get(Constant.SQL_FILTER))
 				);
 		}
@@ -48,7 +48,7 @@ public class RTDataServiceImpl extends ServiceImpl<RealDataDao, RealData> implem
 			page = this.selectPage(
 					new Query<RealData>(params).getPage(),
 					new EntityWrapper<RealData>()
-						.like(StringUtils.isNotBlank(username),"mn", username)
+						.like(StringUtils.isNotBlank(mn),"mn", mn)
 						.addFilterIfNeed(params.get(Constant.SQL_FILTER) != null, (String)params.get(Constant.SQL_FILTER))
 				);
 		}
@@ -60,8 +60,8 @@ public class RTDataServiceImpl extends ServiceImpl<RealDataDao, RealData> implem
 	@Override
 	public List<RealData> queryData(Map<String, Object> params) {
 		String username = (String)params.get("mn");
-		String begindate = (String)params.get("begindate");
-		String enddate = (String)params.get("enddate");
+		String begindate = (String)params.get("begindatetime");
+		String enddate = (String)params.get("enddatetime");
 		List<RealData> list = null;
 		
 		if(begindate != null && enddate != null)
