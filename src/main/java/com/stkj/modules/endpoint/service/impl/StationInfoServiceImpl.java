@@ -35,30 +35,15 @@ public class StationInfoServiceImpl extends ServiceImpl<StationInfoDao, StationI
 	@Override
 	//@DataFilter(subDept = true, user = false)
 	public PageUtils queryPage(Map<String, Object> params) {
-		String username = (String)params.get("mn");
-		String begindate = (String)params.get("begindate");
-		String enddate = (String)params.get("enddate");
+		String mn = (String)params.get("mn");
 		Page<StationInfo> page;
-		
-		if(begindate != null && enddate != null)
-		{
+
 			page = this.selectPage(
 					new Query<StationInfo>(params).getPage(),
 					new EntityWrapper<StationInfo>()
-						.like(StringUtils.isNotBlank(username),"mn", username)
-						.between("time", begindate, enddate)
+						.like(StringUtils.isNotBlank(mn),"mn", mn)
 						.addFilterIfNeed(params.get(Constant.SQL_FILTER) != null, (String)params.get(Constant.SQL_FILTER))
 				);
-		}
-		else
-		{
-			page = this.selectPage(
-					new Query<StationInfo>(params).getPage(),
-					new EntityWrapper<StationInfo>()
-						.like(StringUtils.isNotBlank(username),"mn", username)
-						.addFilterIfNeed(params.get(Constant.SQL_FILTER) != null, (String)params.get(Constant.SQL_FILTER))
-				);
-		}
 		
 		
 		return new PageUtils(page);
@@ -66,20 +51,15 @@ public class StationInfoServiceImpl extends ServiceImpl<StationInfoDao, StationI
 
 	@Override
 	public List<StationInfo> queryData(Map<String, Object> params) {
-		String username = (String)params.get("mn");
-		String begindate = (String)params.get("begindate");
-		String enddate = (String)params.get("enddate");
+		String mn = (String)params.get("mn");
+
 		List<StationInfo> list = null;
 		
-		if(begindate != null && enddate != null)
-		{
 			list = this.selectList(
 					new EntityWrapper<StationInfo>()
-						.like(StringUtils.isNotBlank(username),"mn", username)
-						.between("time", begindate, enddate)
+						.like(StringUtils.isNotBlank(mn),"mn", mn)
 						.addFilterIfNeed(params.get(Constant.SQL_FILTER) != null, (String)params.get(Constant.SQL_FILTER))
 			);
-		}
 		return list;
 	}
 	

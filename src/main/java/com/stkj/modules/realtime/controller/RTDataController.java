@@ -38,13 +38,18 @@ public class RTDataController extends AbstractController {
 		return R.ok().put("page", page);
 	}
 	
-	@RequestMapping(value = "/data")
+	@RequestMapping("/data")
 	@RequiresPermissions("realtime:rtdata:data")
-	public @ResponseBody List<RealData> TimeAndMN(@RequestParam Map<String, Object> params) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		List<RealData> RealData =rtDataService.queryData(params);
-		logger.info(JSON.toJSONString(RealData));
+//	public R TimeAndMN(@RequestParam Map<String, Object> params) {
+//		List<RealData> realData =rtDataService.queryData(params);
+//	
+//		return R.ok().put("data", realData);
+//	}
 	
-		return RealData;
+	public List<RealData> TimeAndMN(@RequestParam Map<String, Object> params) {
+		List<RealData> realData =rtDataService.queryData(params);
+		logger.info(JSON.toJSONString(realData));
+	
+		return realData;
 	}
 }

@@ -48,12 +48,10 @@ public class StationInfoController extends AbstractController {
 		return R.ok().put("page", page);
 	}
 	
-	@RequestMapping(value = "/data")
+	@RequestMapping("/data")
 	@RequiresPermissions("station:stationinfo:data")
-	public @ResponseBody List<StationInfo> TimeAndMN(@RequestParam Map<String, Object> params) {
-		Map<String, Object> map = new HashMap<String, Object>();
+	public List<StationInfo> TimeAndMN(@RequestParam Map<String, Object> params) {
 		List<StationInfo> stationInfo = stationInfoService.queryData(params);
-		logger.info(JSON.toJSONString(stationInfo));
 	
 		return stationInfo;
 	}

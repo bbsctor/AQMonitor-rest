@@ -3,226 +3,58 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-<style type="text/css">
-        .fu_list{ width:350px; border:1px solid #ebebeb;line-height:20px; font-size:12px;}
-        .fu_list thead td{background-color:#ebebeb;}
-        .fu_list td{padding:5px;}
-        .fu_list a{outline:none;/*ff*/hide-focus:expression(this.hideFocus=true);/*ie*/}
-        .fu_list a:link, .fu_list a:visited, .fu_list a:hover, .fu_list a:active{text-decoration:none;color:#333;}
-        .fu_list thead a{padding-center:15px;}
-        .fu_list thead a.up, .fu_list thead a.down{ background:url() center center no-repeat; }
-        .fu_list thead a.down{background-image:url();}
-        .hoverTr{background-color:Orange;}
-    
-		body{height:100%;font-family:"微软雅黑";}
-		#main{width:100%;margin:0 auto;height:80%;}
-		#map{width:100%;height:600px;}
+	<style type="text/css">
+		body, html {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+		#allmap{width:100%;height:500px;}
 		p{margin-left:5px; font-size:14px;}
-		h3{text-align:center;}
-    </style>
-    
+	</style>
 	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=CDe0d2784ccc2ec454fc87f68b364cdd"></script>
-	<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+	<title>纯文本的信息窗口</title>
+	<#include "/header.html">
 </head>
-</head>
-
 <body>
-	
-<div id='main' >
-    <div id='left' style='height:100%; width:69%; margin:0  1.25%; float:left;'>西安市各监测点分布图
-    	<div id="map"></div>
-        <p>点击标注点，可查看由纯文本构成的简单型信息窗口</p>
-    </div>
-
-    <div id='center' style='height:100%;   width:18%; margin:0 1.25%;  float:left;'>点击列标题可按该项指标排序
-    	   <table   border="0" cellspacing="0" cellpadding="0" class="fu_list" id="idTable">
-        <thead>
-            <tr >
-            
-            <td width="30%" > <a href="javascript:void(0)" id="idTitle">监测点</a> </td>
-            <td width="50%" align="center"><a href="javascript:void(0)" id="idAddtime" class="up">上传时间</a></td>
-            <td width="20%" align="center"><a href="javascript:void(0)" id="idSize">AQI排名</a></td>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                
-                <td _order="钟楼">钟楼</td>
-                <td align="center" _order="2018/06/22 06:00:00">2018/06/22 06:00:00</td>
-                <td align="center" _order="66">66</td>
-            </tr>
-            <tr>
-               
-                <td _order="兴庆公园">兴庆公园</td>
-                <td align="center" _order="2018/06/22 06:01:00">2018/06/22 06:01:00</td>
-                <td align="center" _order="61">61</td>
-            </tr>
-            <tr>
-               
-                <td _order="西安北站">西安北站</td>
-                <td align="center" _order="2018/06/22 06:02:00">2018/06/22 06:02:00</td>
-                <td align="center" _order="71">71</td>
-            </tr>
-            <tr>
-               
-                <td _order="西安站">西安站</td>
-                <td align="center" _order="2018/06/22 06:03:00">2018/06/22 06:03:00</td>
-                <td align="center" _order="88">88</td>
-            </tr>
-            
-            <tr>
-                
-                <td _order="思坦公司">思坦公司</td>
-                <td align="center" _order="2018/06/22 06:04:00">2018/06/22 06:04:00</td>
-                <td align="center" _order="58">58</td>
-            </tr>
-            <tr>
-                
-                <td _order="昆明池七夕公园">昆明池七夕公园</td>
-                <td align="center" _order="2018/06/22 06:05:00">2018/06/22 06:05:00</td>
-                <td align="center" _order="51">51</td>
-            </tr>
-            <tr>
-                
-                <td _order="小寨">小寨</td>
-                <td align="center" _order="2018/06/22 06:06:00">2018/06/22 06:06:00</td>
-                <td align="center" _order="95">95</td>
-            </tr>
-          
-            <tr>
-                
-                <td _order="西安植物园">西安植物园</td>
-                <td align="center" _order="2018/06/22 06:07:00">2018/06/22 06:07:00</td>
-                <td align="center" _order="46">46</td>
-            </tr>
-            <tr>
-                
-                <td _order="陕西师范大学">陕西师范大学</td>
-                <td align="center" _order="2018/06/22 06:08:00">2018/06/22 06:08:00</td>
-                <td align="center" _order="59">59</td>
-            </tr>
-            <tr>
-                
-                <td _order="清凉山森林公园">清凉山森林公园</td>
-                <td align="center" _order="2018/06/22 06:09:00">2018/06/22 06:09:00</td>
-                <td align="center" _order="22">22</td>
-            </tr>
-            <tr>
-                
-                <td _order="沣河湿地公园">沣河湿地公园</td>
-                <td align="center" _order="2018/06/22 06:10:00">2018/06/22 06:10:00</td>
-                <td align="center" _order="33">33</td>
-            </tr>
-           
-			 <tr>
-                
-                <td _order="华清宫">华清宫</td>
-                <td align="center" _order="2018/06/22 06:11:00">2018/06/22 06:11:00</td>
-                <td align="center" _order="42">42</td>
-            </tr>
-            <tr>
-                
-                <td _order="长安广场">长安广场</td>
-                <td align="center" _order="2018/06/22 06:12:00">2018/06/22 06:12:00</td>
-                <td align="center" _order="49">49</td>
-            </tr>
-            <tr>
-                
-                <td _order="西安交通大学">西安交通大学</td>
-                <td align="center" _order="2018/06/22 06:13:00">2018/06/22 06:13:00</td>
-                <td align="center" _order="54">54</td>
-            </tr>
-            <tr>
-                
-                <td _order="软件公寓">软件公寓</td>
-                <td align="center" _order="2018/06/22 06:14:00">2018/06/22 06:14:00</td>
-                <td align="center" _order="67">67</td>
-            </tr>
-            <tr>
-                
-                <td _order="西安南站">西安南站</td>
-                <td align="center" _order="2018/06/22 06:15:00">2018/06/22 06:15:00</td>
-                <td align="center" _order="62">62</td>
-            </tr>
-			 <tr>
-                
-                <td _order="航天动力研究所">航天动力研究所</td>
-                <td align="center" _order="2018/06/22 06:16:00">2018/06/22 06:16:00</td>
-                <td align="center" _order="72">72</td>
-            </tr>
-          
-            <tr>
-                
-                <td _order="陕西省中医医院">陕西省中医医院</td>
-                <td align="center" _order="2018/06/22 06:17:00">2018/06/22 06:17:00</td>
-                <td align="center" _order="69">69</td>
-            </tr>
-            <tr>
-                
-                <td _order="古都大剧院">古都大剧院</td>
-                <td align="center" _order="2018/06/22 06:18:00">2018/06/22 06:18:00</td>
-                <td align="center" _order="63">63</td>
-            </tr>
-            <tr>
-                
-                <td _order="西安世博园">西安世博园</td>
-                <td align="center" _order="2018/06/22 06:19:00">2018/06/22 06:19:00</td>
-                <td align="center" _order="60">60</td>
-            </tr>
-        </tbody>
-    </table>
-    </div>
-</div>
- <script src="${request.contextPath}/statics/js//modules/map/jquery-1.4.1.min.js" type="text/javascript"></script>
-    <script src="${request.contextPath}/statics/js/modules/map/TableOrder.js" type="text/javascript"></script>
-    <script src="${request.contextPath}/statics/js/modules/map/ZhCN_Pinyin.min.js" type="text/javascript"></script>
-    <script type="text/javascript">
-        TableOrderOper.Init("idTable", 0, {
-            OnShow: function (i, trJqObj, _tbodyObj) {
-                trJqObj.attr("class", ((i + 1) % 2 == 0 ? "hoverTr" : ""));
-            }
-        });
-        TableOrderOper.SetOrder("idTitle", 0, { ValAttr: "_order", DataType: "string" });
-        TableOrderOper.SetOrder("idAddtime", 1, { ValAttr: "_order", DataType: "date" });
-        TableOrderOper.SetOrder("idSize", 2, { DataType: "int", DefaultOrder: true});
-    </script>
- </body>
+	<div id="allmap"></div>
+	<p>点击标注点，可查看由纯文本构成的简单型信息窗口</p>
+</body>
 </html>
-
-
 <script type="text/javascript">
-	// 百度地图API功能	
-	
-	
+// 	function loadJScript() {
+// 		var script = document.createElement("script");
+// 		script.type = "text/javascript";
+// 		script.src="http://api.map.baidu.com/api?v=2.0&ak=CDe0d2784ccc2ec454fc87f68b364cdd&callback=map_init";
+// 		document.body.appendChild(script);
+// 	}
 
-	
-	var markerArr = [
-					{ title: "名称：钟楼", point: "108.9534640397,34.2658490887", address: "陕西省西安市新城区北大街", AQI: "66", time: "2018/06/22 06:00:00" },
-					{ title: "名称：兴庆公园", point: "108.9902481193,34.2601103166", address: "陕西省西安市碑林区咸宁西路55号", AQI: "61", time: "2018/06/22 06:01:00" },
-					{ title: "名称：西安北站", point: "108.9453649603,34.3824069067", address: "陕西省西安市未央区汉城街道", AQI: "71", time: "2018/06/22 06:02:00" },
-                    { title: "名称：火车站", point: "108.9685919539,34.2825215707", address: "陕西省西安市新城区环城北路44号", AQI: "88", time: "2018/06/22 06:03:00" },
-                    { title: "名称：思坦公司", point: "108.8841365357,34.2220925488", address: "陕西省西安市科技五路22号", AQI: "58" , time: "2018/06/22 06:04:00"},
-                    { title: "名称：昆明池七夕公园", point: "108.7833959281,34.2121989039", address: "陕西省西安市长安区鱼斗路", AQI: "51" , time: "2018/06/22 06:05:00"},
-					{ title: "名称：小寨", point: "108.9529620000,34.2289830000", address: "陕西省西安市雁塔区长安中路", AQI: "95" , time: "2018/06/22 06:06:00"},
-					{ title: "名称：西安植物园", point: "109.0362890000,34.2148940000", address: "陕西省西安市翠华路24米附近", AQI: "46" , time: "2018/06/22 06:07:001"},
-					{ title: "名称：陕西师范大学", point: "108.8989740000,34.1600230000", address: "陕西省西安市长安区西长安街620号", AQI: "59" , time: "2018/06/22 06:08:00"},
-					{ title: "名称：清凉山森林公园", point: "108.9402240000,34.1811090000", address: "陕西省西安市长安区西部大道", AQI: "22" , time: "2018/06/22 06:09:00"},
-					{ title: "名称：沣河湿地公园", point: "108.7429200000,34.2266550000", address: "陕西省西安市长安区108国道沣河大桥", AQI: "33" , time: "2018/06/22 06:10:00"},
-                    { title: "名称：华清宫", point: "109.2187700000,34.3697720000", address: "陕西省西安市临潼区华清路3号", AQI: "42", time: "2018/06/22 06:11:00" },
-					{ title: "名称：长安广场", point: "108.9353730000,34.1634730000", address: "陕西省西安市长安区西长安街195号", AQI: "49" , time: "2018/06/22 06:12:00"},
-					{ title: "名称：西安交通大学", point: "109.0076240000,34.2293860000", address: "陕西省西安市西安交通大学", AQI: "54" , time: "2018/06/22 06:13:00"},
-					{ title: "名称：软件公寓", point: "108.8447430000,34.2234760000", address: "陕西省西安市雁塔区电子一路西段18号b座", AQI: "67" , time: "2018/06/22 06:14:00"},
-					{ title: "名称：西安南站", point: "109.1080090000,34.0988460000", address: "陕西省西安市长安区引镇", AQI: "62" , time: "2018/06/22 06:15:00"},
-					{ title: "名称：航天动力研究所", point: "108.9691130000,34.1689690000", address: "陕西省西安市长安区航天基地飞天路289号", AQI: "72" , time: "2018/06/22 06:16:00"},
-					{ title: "名称：陕西省中医医院", point: "108.9511020000,34.2701130000", address: "陕西省西安市莲湖区西华门4号", AQI: "69" , time: "2018/06/22 06:17:00"},
-					{ title: "名称：古都大剧院", point: "108.9389800000,34.2750280000", address: "陕西省西安市莲湖区莲湖路172号古都新世界大酒店1楼", AQI: "63" , time: "2018/06/22 06:18:00"},
-					{ title: "名称：西安世博园", point: "109.0675500000,34.3291270000", address: "陕西省西安市灞桥区东三环世博大道", AQI: "60" , time: "2018/06/22 06:19:00"}
-					
+ var markerArr;
+ function init()
+ {
+ 	$.ajax({	//使用JQuery内置的Ajax方法         
+                type : "post",		//post请求方式
+              //  contentType:"application/json;charset=utf-8",
+                async : true,		//异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+                url : baseURL + '/station/stationinfo/data',	//请求发送到ShowInfoIndexServlet处
+                dataType : "json",		//返回数据形式为json
+                
+                success : function(result) {
+              
+               	 //请求成功时执行该函数内容，result即为服务器返回的json对象
+       	         if (result != null && result.length > 0) {
+       	         		markerArr = result;      	         		
+						//loadJScript();
+						map_init();
+       	   		     }
+       	   		     },
+       	   		 error : function(errorMsg) {
+            		//请求失败时执行该函数
+                		alert(errorMsg); 
+                	} 	    
+       	   	});
+       	   	
+            	
+ }
 
-                ];
-
-                function map_init() {
-                    var map = new BMap.Map("map"); // 创建Map实例
+function map_init() {
+                    var map = new BMap.Map("allmap"); // 创建Map实例
                     var point = new BMap.Point(108.9685919539,34.2825215707); //地图中心点，广州市
                     map.centerAndZoom(point, 12); // 初始化地图,设置中心点坐标和地图级别。
 					map.enableScrollWheelZoom(true); //启用滚轮放大缩小
@@ -241,90 +73,20 @@
 					map.setCurrentCity("西安");        //由于有3D图，需要设置城市哦
 					map.addControl(overView);          //添加默认缩略地图控件
 					map.addControl(overViewOpen);      //右下角，打开
-
-                    var point = new Array(); //存放标注点经纬信息的数组
-                    var marker = new Array(); //存放标注点对象的数组
-                    var info = new Array(); //存放提示信息窗口对象的数组
+                    
+                    function addMarker(point){
+					    var marker = new BMap.Marker(point);
+					    map.addOverlay(marker);
+						}
+                    
                     for (var i = 0; i < markerArr.length; i++) {
                         var p0 = markerArr[i].point.split(",")[0]; //
                         var p1 = markerArr[i].point.split(",")[1]; //按照原数组的point格式将地图点坐标的经纬度分别提出来
-                        point[i] = new window.BMap.Point(p0, p1); //循环生成新的地图点
-                        marker[i] = new window.BMap.Marker(point[i]); //按照地图点坐标生成标记
-                        map.addOverlay(marker[i]);
-                        marker[i].setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
-                        var label = new window.BMap.Label(markerArr[i].title, { offset: new window.BMap.Size(20, -10) });
-                        marker[i].setLabel(label);
-                        info[i] = new window.BMap.InfoWindow("<p style=’font-size:12px;lineheight:1.8em;’>" + markerArr[i].title + "</br>地址：" + markerArr[i].address + "</br> AQI：" + markerArr[i].AQI + "</br>上传时间：" + markerArr[i].time + "</br></p>"); // 创建信息窗口对象
+                        var point = new window.BMap.Point(p0, p1); //循环生成新的地图点
+                        addMarker(point);
                     }
-                    marker[0].addEventListener("mouseover", function () {
-                        this.openInfoWindow(info[0]);
-                    });
-                    marker[1].addEventListener("mouseover", function () {
-                        this.openInfoWindow(info[1]);
-                    });
-                    marker[2].addEventListener("mouseover", function () {
-                        this.openInfoWindow(info[2]);
-                    });
-					 marker[3].addEventListener("mouseover", function () {
-                        this.openInfoWindow(info[3]);
-                    });
-					 marker[4].addEventListener("mouseover", function () {
-                        this.openInfoWindow(info[4]);
-                    });
-					 marker[5].addEventListener("mouseover", function () {
-                        this.openInfoWindow(info[5]);
-                    });
-					 marker[6].addEventListener("mouseover", function () {
-                        this.openInfoWindow(info[6]);
-                    });
-					 marker[7].addEventListener("mouseover", function () {
-                        this.openInfoWindow(info[7]);
-                    });
-					 marker[8].addEventListener("mouseover", function () {
-                        this.openInfoWindow(info[8]);
-                    });
-					marker[9].addEventListener("mouseover", function () {
-                        this.openInfoWindow(info[9]);
-                    });
-					marker[10].addEventListener("mouseover", function () {
-                        this.openInfoWindow(info[10]);
-                    });
-                    marker[11].addEventListener("mouseover", function () {
-                        this.openInfoWindow(info[11]);
-                    });
-                    marker[12].addEventListener("mouseover", function () {
-                        this.openInfoWindow(info[12]);
-                    });
-					 marker[13].addEventListener("mouseover", function () {
-                        this.openInfoWindow(info[13]);
-                    });
-					 marker[14].addEventListener("mouseover", function () {
-                        this.openInfoWindow(info[14]);
-                    });
-					 marker[15].addEventListener("mouseover", function () {
-                        this.openInfoWindow(info[15]);
-                    });
-					 marker[16].addEventListener("mouseover", function () {
-                        this.openInfoWindow(info[16]);
-                    });
-					 marker[17].addEventListener("mouseover", function () {
-                        this.openInfoWindow(info[17]);
-                    });
-					 marker[18].addEventListener("mouseover", function () {
-                        this.openInfoWindow(info[18]);
-                    });
-					marker[19].addEventListener("mouseover", function () {
-                        this.openInfoWindow(info[19]);
-                    });
-					 
-                }
-                //异步调用百度js
-                function map_load() {
-                    var load = document.createElement("script");
-                    load.src = "http://api.map.baidu.com/api?v=1.4&callback=map_init";
-                    document.body.appendChild(load);
-                }
-                window.onload = map_load;
-	
-	
+                 }
+
+ 
+                window.onload = init;
 </script>

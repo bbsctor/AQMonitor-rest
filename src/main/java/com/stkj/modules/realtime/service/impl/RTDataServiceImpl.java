@@ -59,20 +59,29 @@ public class RTDataServiceImpl extends ServiceImpl<RealDataDao, RealData> implem
 
 	@Override
 	public List<RealData> queryData(Map<String, Object> params) {
-		String username = (String)params.get("mn");
-		String begindate = (String)params.get("begindatetime");
-		String enddate = (String)params.get("enddatetime");
+		String mn = (String)params.get("mn");
+		String begindatetime = (String)params.get("begindatetime");
+		String enddatetime = (String)params.get("enddatetime");
 		List<RealData> list = null;
 		
-		if(begindate != null && enddate != null)
+		if(begindatetime != null && enddatetime != null && begindatetime.isEmpty() == false && enddatetime.isEmpty() == false  )
 		{
 			list = this.selectList(
 					new EntityWrapper<RealData>()
-						.like(StringUtils.isNotBlank(username),"mn", username)
-						.between("time", begindate, enddate)
-						.addFilterIfNeed(params.get(Constant.SQL_FILTER) != null, (String)params.get(Constant.SQL_FILTER))
+					.like(StringUtils.isNotBlank(mn),"mn", mn)
+					.between("time", begindatetime, enddatetime)
+					.addFilterIfNeed(params.get(Constant.SQL_FILTER) != null, (String)params.get(Constant.SQL_FILTER))
 			);
 		}
+		else
+		{
+			list = this.selectList(
+					new EntityWrapper<RealData>()
+					.like(StringUtils.isNotBlank(mn),"mn", mn)
+					.addFilterIfNeed(params.get(Constant.SQL_FILTER) != null, (String)params.get(Constant.SQL_FILTER))
+			);
+		}
+		
 		return list;
 	}
 }
