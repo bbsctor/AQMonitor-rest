@@ -12,4 +12,6 @@ public interface RTDataService extends IService<RealData> {
 	PageUtils queryPage(Map<String, Object> params);
 	
 	List<RealData> queryData(Map<String, Object> params);
+	
+	List<RealData> queryLatestDataByMN(String mn);
 }

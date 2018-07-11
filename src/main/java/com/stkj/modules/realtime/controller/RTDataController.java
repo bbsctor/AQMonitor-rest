@@ -40,12 +40,6 @@ public class RTDataController extends AbstractController {
 	
 	@RequestMapping("/data")
 	@RequiresPermissions("realtime:rtdata:data")
-//	public R TimeAndMN(@RequestParam Map<String, Object> params) {
-//		List<RealData> realData =rtDataService.queryData(params);
-//	
-//		return R.ok().put("data", realData);
-//	}
-	
 	public List<RealData> TimeAndMN(@RequestParam Map<String, Object> params) {
 		List<RealData> realData =rtDataService.queryData(params);
 		logger.info(JSON.toJSONString(realData));

@@ -5,7 +5,7 @@ public class StationInfo {
 
     private String siteName;
 
-    private Integer siteNum;
+    private String siteNum;
 
     private String province;
 
@@ -41,11 +41,11 @@ public class StationInfo {
         this.siteName = siteName == null ? null : siteName.trim();
     }
 
-    public Integer getSiteNum() {
+    public String getSiteNum() {
         return siteNum;
     }
 
-    public void setSiteNum(Integer siteNum) {
+    public void setSiteNum(String siteNum) {
         this.siteNum = siteNum;
     }
 

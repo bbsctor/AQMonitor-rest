@@ -1,5 +1,6 @@
 package com.stkj.modules.realtime.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -64,7 +65,7 @@ public class RTDataServiceImpl extends ServiceImpl<RealDataDao, RealData> implem
 		String enddatetime = (String)params.get("enddatetime");
 		List<RealData> list = null;
 		
-		if(begindatetime != null && enddatetime != null && begindatetime.isEmpty() == false && enddatetime.isEmpty() == false  )
+		if(StringUtils.isNotBlank(begindatetime) && StringUtils.isNotBlank(enddatetime) && StringUtils.isNotBlank(mn))
 		{
 			list = this.selectList(
 					new EntityWrapper<RealData>()
@@ -73,7 +74,7 @@ public class RTDataServiceImpl extends ServiceImpl<RealDataDao, RealData> implem
 					.addFilterIfNeed(params.get(Constant.SQL_FILTER) != null, (String)params.get(Constant.SQL_FILTER))
 			);
 		}
-		else
+		else if(StringUtils.isNotBlank(mn))
 		{
 			list = this.selectList(
 					new EntityWrapper<RealData>()
@@ -82,6 +83,24 @@ public class RTDataServiceImpl extends ServiceImpl<RealDataDao, RealData> implem
 			);
 		}
 		
+		return list;
+	}
+
+	@Override
+	public List<RealData> queryLatestDataByMN(String mn) {
+		List<RealData> list = null;
+		
+		if(StringUtils.isNotBlank(mn))
+		{
+			List<String> order = new ArrayList<String>();
+			order.add("time");
+			list = realDataDao.selectPage(
+			        new Page<RealData>(1, 1),
+			        new EntityWrapper<RealData>()
+			        .like(StringUtils.isNotBlank(mn),"mn", mn)
+					.orderDesc(order)
+			);
+		}
 		return list;
 	}
 }
