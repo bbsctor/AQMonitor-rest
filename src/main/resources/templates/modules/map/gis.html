@@ -124,13 +124,13 @@
 				//请求成功时执行该函数内容，result即为服务器返回的json对象
 				if (result != null && result.length > 0) {
 					var opts = {
-						width : 600, // 信息窗口宽度
-						height : 200, // 信息窗口高度
+						width : 400, // 信息窗口宽度
+						height : 100, // 信息窗口高度
 						title : "实时监测数据",  // 信息窗口标题
 					};
 					console.log(JSON.stringify(result[0]));
  					//var infostr = result[0].aqiindex.toString();
- 					var infostr = "<div style='overflow-y:scroll;height:150px'>" + JSON.stringify(result[0]) + "</div>";
+ 					var infostr = "<div style='overflow-y:scroll;height:80px'>" + JSON.stringify(result[0]) + "</div>";
  					var infoWindow = new BMap.InfoWindow(infostr, opts); // 创建信息窗口对象 
  					map.openInfoWindow(infoWindow, sitepoint); //开启信息窗口  
 				}
