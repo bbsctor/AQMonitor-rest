@@ -43,10 +43,7 @@
 				//请求成功时执行该函数内容，result即为服务器返回的json对象
 				if (result != null && result.length > 0) {
 					markerArr = [].concat(result);
-					//alert("数据初始化完成");
 					console.log(markerArr);
-					//loadJScript();
-					//sleep(5000);
 					addPoint();
 				}
 			},
@@ -63,7 +60,7 @@
 	function map_init() {
 		map = new BMap.Map("allmap"); // 创建Map实例
 		var point = new BMap.Point(108.9353730000,34.1634730000);
-		map.centerAndZoom("西安", 12); // 初始化地图,设置中心点坐标和地图级别。
+		map.centerAndZoom(point, 12); // 初始化地图,设置中心点坐标和地图级别。
 		map.enableScrollWheelZoom(true); //启用滚轮放大缩小
 		var mapType1 = new BMap.MapTypeControl({
 			mapTypes : [ BMAP_NORMAL_MAP, BMAP_HYBRID_MAP ]
@@ -114,7 +111,6 @@
 	}
 
 	function getAttr(e) {
-		//alert(e.target.id);
 
 
 		$.ajax({ //使用JQuery内置的Ajax方法         
@@ -128,15 +124,15 @@
 				//请求成功时执行该函数内容，result即为服务器返回的json对象
 				if (result != null && result.length > 0) {
 					var opts = {
-						width : 200, // 信息窗口宽度
-						height : 100, // 信息窗口高度
+						width : 600, // 信息窗口宽度
+						height : 200, // 信息窗口高度
 						title : "实时监测数据",  // 信息窗口标题
 					};
-					console.log(result);
-					alert(result[0].so2);
-					var infostr = result[0].so2;
-					var infoWindow = new BMap.InfoWindow(infostr, opts); // 创建信息窗口对象 
-					map.openInfoWindow(infoWindow, sitepoint); //开启信息窗口  
+					console.log(JSON.stringify(result[0]));
+ 					//var infostr = result[0].aqiindex.toString();
+ 					var infostr = "<div style='overflow-y:scroll;height:150px'>" + JSON.stringify(result[0]) + "</div>";
+ 					var infoWindow = new BMap.InfoWindow(infostr, opts); // 创建信息窗口对象 
+ 					map.openInfoWindow(infoWindow, sitepoint); //开启信息窗口  
 				}
 			},
 			error : function(errorMsg) {
@@ -146,15 +142,109 @@
 		});
 	}
 
-	function sleep(numberMillis) {
-		var now = new Date();
-		var exitTime = now.getTime() + numberMillis;
-		while (true) {
-			now = new Date();
-			if (now.getTime() > exitTime)
-				return;
-		}
-	}
+//	function genLatestDataStr(result)
+//	{
+// 		var jsonStr;
+// 		jsonStr = "aqiindex:" + 
+// 		:
+// 		3
+// 		aqilevel
+// 		:
+// 		8
+// 		atmPressure
+// 		:
+// 		0
+// 		atmPressureFlag
+// 		:
+// 		"F"
+// 		co
+// 		:
+// 		0.54
+// 		coFlag
+// 		:
+// 		"N"
+// 		id
+// 		:
+// 		25393
+// 		latitude
+// 		:
+// 		0
+// 		longtitude
+// 		:
+// 		0
+// 		mn
+// 		:
+// 		"88888880000002"
+// 		moistrueFlag
+// 		:
+// 		"F"
+// 		moisture
+// 		:
+// 		0
+// 		no2
+// 		:
+// 		0.087
+// 		no2Flag
+// 		:
+// 		"N"
+// 		o3
+// 		:
+// 		0.083
+// 		o3Flag
+// 		:
+// 		"N"
+// 		pm10
+// 		:
+// 		30.45
+// 		pm10Flag
+// 		:
+// 		"N"
+// 		pm25
+// 		:
+// 		25.02
+// 		pm25Flag
+// 		:
+// 		"N"
+// 		siteName
+// 		:
+// 		null
+// 		siteNum
+// 		:
+// 		null
+// 		so2
+// 		:
+// 		0.05
+// 		so2Flag
+// 		:
+// 		"N"
+// 		temperature
+// 		:
+// 		0
+// 		temperatureFlag
+// 		:
+// 		"F"
+// 		time
+// 		:
+// 		"2018-05-07 03:52:48"
+// 		tvoc
+// 		:
+// 		0.043
+// 		tvocFlag
+// 		:
+// 		"N"
+// 		windDirection
+// 		:
+// 		"0.0"
+// 		windDirectionFlag
+// 		:
+// 		"F"
+// 		windSpeed
+// 		:
+// 		0
+// 		windSpeedFlag
+// 		:
+// 		"F"
+// 	}
 
 	window.onload = init;
 </script>
